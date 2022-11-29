@@ -2,10 +2,12 @@
   "name": "firstapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "coucou": "echo coucou",
     "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "docker:build": "docker build -t gcr_test ./",
+    "docker:run": "docker run -it -p 3000:3000 gcr_test",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["api", "cours", "rest", "node", "express"],
