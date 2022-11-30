@@ -14,9 +14,12 @@ steps:
         '${_SERVICE_NAME}',
         '--image',
         'gcr.io/$PROJECT_ID/${_SERVICE_NAME}:latest',
+        '--project',
+        '$PROJECT_ID',
         '--region',
         'europe-west1',
         '--platform',
         'managed',
         '--allow-unauthenticated',
+        '--quiet',
       ]
