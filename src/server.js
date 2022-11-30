@@ -7,7 +7,7 @@ require('./database/index');
 const app = express();
 app.use(express.json());
 
-app.get('/test/:id', isAuthenticated, controllers.test);
+app.get('/test/:username', controllers.test);
 
 app.get('/', isAuthenticated, controllers.test);
 
@@ -18,6 +18,6 @@ app.delete('/', isAuthenticated, controllers.test);
 
 app.post('/', isAuthenticated, controllers.test);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Server running on port 3000');
 });
