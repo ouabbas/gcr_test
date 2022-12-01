@@ -8,12 +8,20 @@
     "start": "node src/server.js",
     "docker:build": "docker build -t gcr_test ./",
     "docker:run": "docker run -it -p 3000:3000 gcr_test",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-env": "printenv > .env"
   },
-  "keywords": ["api", "cours", "rest", "node", "express"],
+  "keywords": [
+    "api",
+    "cours",
+    "rest",
+    "node",
+    "express"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.7.2",
     "nodemon": "^2.0.20"
