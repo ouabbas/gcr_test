@@ -34,7 +34,7 @@ jobs:
 
       - name: Set-up env file
         run: |-
-          BIGBOSS=$BIGBOSS
+          BIGBOSS=${{ env.BIGBOSS }}
 
       - name: Build and tag image
         run: |-
