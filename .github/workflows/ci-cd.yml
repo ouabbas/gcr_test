@@ -47,8 +47,7 @@ jobs:
           service: ${{ env.SERVICE }}
           image: gcr.io/${{ env.CLOUD_RUN_PROJECT_ID }}/${{ env.IMAGE_NAME }}:v0.0.1
           region: ${{ env.CLOUD_RUN_REGION }}
-          flags: '--allow-unauthenticated --quiet --platform managed'
-          tag: 'v0.0.1'
+          flags: '--allow-unauthenticated'
 
       # - name: Deploy
       #   run: |-
