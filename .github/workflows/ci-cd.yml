@@ -5,9 +5,10 @@ on:
 env:
   CLOUD_RUN_SERVICE_ACCOUNT_EMAIL: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
   SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-  CLOUD_RUN_PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  CLOUD_RUN_PROJECT_ID: abdc-gmb
   CLOUD_RUN_REGION: europe-west1
   IMAGE_NAME: gcr-test
+  SERVICE_NAME: gcr-test
 
 jobs:
   build-push-gcr:
@@ -44,9 +45,9 @@ jobs:
       - id: 'deploy'
         uses: 'google-github-actions/deploy-cloudrun@v1'
         with:
-          service: ${{ env.SERVICE }}
-          image: gcr.io/${{ env.CLOUD_RUN_PROJECT_ID }}/${{ env.IMAGE_NAME }}:v0.0.1
-          region: ${{ env.CLOUD_RUN_REGION }}
+          service: $SERVICE_NAME
+          image: gcr.io/$CLOUD_RUN_PROJECT_ID/$IMAGE_NAME:v0.0.1
+          region: $CLOUD_RUN_REGION
           flags: '--allow-unauthenticated'
 
       # - name: Deploy
