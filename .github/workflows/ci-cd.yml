@@ -9,6 +9,7 @@ env:
   CLOUD_RUN_REGION: europe-west1
   IMAGE_NAME: gcr-test
   SERVICE_NAME: gcr-test
+  BIGBOSS: oussams93
 
 jobs:
   build-and-deploy-gcr:
@@ -30,6 +31,10 @@ jobs:
       - name: Enable the necessary APIs and enable docker auth
         run: |-
           gcloud --quiet auth configure-docker
+
+      - name: Set-up env file
+        run: |-
+          BIGBOSS=$BIGBOSS
 
       - name: Build and tag image
         run: |-
