@@ -1,5 +1,5 @@
 const express = require('express');
-const event = require('events');
+require('dotenv').config();
 // const isAuthenticated = require('./middlewares/auth.middleware');
 // const dtos = require('./dtos');
 // const controllers = require('./controllers');
@@ -7,7 +7,9 @@ const event = require('events');
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => res.status(200).send('OK BG :)'));
+app.get('/', (_, res) =>
+  res.status(200).send(`OK BG :) -> ${process.env.BIGBOSS ?? 'NADA'}`)
+);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Server running on port 3000');

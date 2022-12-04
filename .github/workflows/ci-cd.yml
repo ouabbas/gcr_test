@@ -11,7 +11,7 @@ env:
   SERVICE_NAME: gcr-test
 
 jobs:
-  build-push-gcr:
+  build-and-deploy-gcr:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     steps:
