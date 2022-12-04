@@ -1,22 +1,13 @@
 const express = require('express');
-const isAuthenticated = require('./middlewares/auth.middleware');
-const dto = require('./dtos/twitos.dto');
-const controllers = require('./controllers/twitos.controller');
-require('./database/index');
+const event = require('events');
+// const isAuthenticated = require('./middlewares/auth.middleware');
+// const dtos = require('./dtos');
+// const controllers = require('./controllers');
 
 const app = express();
 app.use(express.json());
 
-app.get('/test/:username', controllers.test);
-
-app.get('/', isAuthenticated, controllers.test);
-
-app.put('/', isAuthenticated, controllers.test);
-app.patch('/', isAuthenticated, controllers.test);
-
-app.delete('/', isAuthenticated, controllers.test);
-
-app.post('/', isAuthenticated, controllers.test);
+app.get('/', (req, res) => res.status(200).send('OK BG'));
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('Server running on port 3000');

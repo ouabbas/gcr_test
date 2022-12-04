@@ -1,0 +1,52 @@
+name: abdc-gcloud
+on:
+  push:
+    branches: [main]
+env:
+  CLOUD_RUN_SERVICE_ACCOUNT_EMAIL: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
+  SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+  CLOUD_RUN_PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_ID }}
+  CLOUD_RUN_REGION: europe-west1
+  IMAGE_NAME: gcr-test
+
+jobs:
+  build-push-gcr:
+    name: Build and Push to GCP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ env.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
+          service_account_key: ${{ env.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ env.CLOUD_RUN_PROJECT_ID }}
+          export_default_credentials: true
+
+      - name: Enable the necessary APIs and enable docker auth
+        run: |-
+          gcloud services enable containerregistry.googleapis.com
+          gcloud services enable run.googleapis.com
+          gcloud --quiet auth configure-docker
+
+      - name: Build and tag image
+        run: |-
+          docker build -t $IMAGE_NAME:latest .
+
+      - name: Push Docker Image to Artifact Registry
+        run: |-
+          docker tag $IMAGE_NAME:latest gcr.io/$CLOUD_RUN_PROJECT_ID/$IMAGE_NAME:$latest
+          docker tag $IMAGE_NAME:latest gcr.io/$CLOUD_RUN_PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA
+          docker push gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$latest
+          docker push gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+
+      # - name: Deploy
+      #   run: |-
+      #     gcloud components install beta --quiet
+      #     gcloud beta run deploy $REPO_NAME --image gcr.io/$CLOUD_RUN_PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
+      #       --project $CLOUD_RUN_PROJECT_ID \
+      #       --platform managed \
+      #       --region $CLOUD_RUN_REGION \
+      #       --allow-unauthenticated \
+      #       --quiet

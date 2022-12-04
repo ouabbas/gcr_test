@@ -1,60 +1,25 @@
-const dtoGetUserTodolist = (req, res, next) => {
-  try {
-    const user = req.params.user;
+const ObjectId = require('mongoose').Types.ObjectId;
 
-    if (!user?.length) {
-      res.status(400).send('User name has to be grander than 0');
+const createTwitoDto = (req, res, next) => {
+  try {
+    const { content, answers, isSurvey } = req.body;
+
+    if (!content?.length) {
+      res.status(400).send('Twito content required');
       return;
     }
-    next();
-  } catch (error) {
-    res.status(500).send('ERROR');
-  }
-};
-
-const dtoCreateUserTodolist = (req, res, next) => {
-  try {
-    const user = req.body.user;
-
-    if (!user) {
-      res.status(400).send('Username missing');
+    if (content?.length > 250) {
+      res.status(400).send('Twito content length max 250');
       return;
     }
 
-    next();
-  } catch (error) {
-    res.status(500).send('Une erreur est survenue');
-  }
-};
-
-const dtoPatchUserTodolist = (req, res, next) => {
-  try {
-    const user = req.params.user;
-    const data = req.body.todos;
-
-    if (!user?.length) {
-      res.status(400).send("User can't be empty");
-      return;
-    }
-
-    if (!data?.length) {
-      res.status(400).send("Todos can't be empty");
-      return;
-    }
-
-    next();
-  } catch (error) {
-    res.status(500).send('EROOR');
-  }
-};
-
-const dtoDeleteUserTodolist = (req, res, next) => {
-  try {
-    const user = req.params.user;
-
-    if (!user?.length) {
-      res.status(400).send('User have not to be empty');
-      return;
+    if (isSurvey) {
+      if (answers?.length === 2) {
+        res
+          .status(400)
+          .send('Twito survey answers length has to be equal to 2');
+        return;
+      }
     }
 
     next();
@@ -63,17 +28,22 @@ const dtoDeleteUserTodolist = (req, res, next) => {
   }
 };
 
-const dtoDeleteUserTodolistTask = (req, res, next) => {
+const patchTwitoDto = (req, res, next) => {
   try {
-    const { user, index } = req.params;
+    const { id } = req.params;
+    const { content } = req.body;
 
-    if (!user?.length) {
-      res.status(400).send("Envoie un nom d'utilisateur non vide !");
+    if (!ObjectId.isValid(id)) {
+      res.status(400).send('Twito id incorrect');
       return;
     }
 
-    if (!parseInt(index) || parseInt(index) <= -1) {
-      res.status(400).send('Envoie un index supérieur ou égal à 0');
+    if (!content?.length) {
+      res.status(400).send('Twito content required');
+      return;
+    }
+    if (content?.length > 250) {
+      res.status(400).send('Twito content length max 250');
       return;
     }
 
@@ -84,9 +54,6 @@ const dtoDeleteUserTodolistTask = (req, res, next) => {
 };
 
 module.exports = {
-  dtoGetUserTodolist,
-  dtoCreateUserTodolist,
-  dtoPatchUserTodolist,
-  dtoDeleteUserTodolist,
-  dtoDeleteUserTodolistTask,
+  createTwitoDto,
+  patchTwitoDto,
 };
