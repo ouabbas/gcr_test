@@ -37,6 +37,7 @@ jobs:
 
       - name: Build and tag image
         run: |-
+          echo NAME=$NAME
           echo NAME=$NAME > .env
           docker build -t $IMAGE_NAME:latest .
 
