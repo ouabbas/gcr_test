@@ -12,7 +12,7 @@ env:
   ENV: ${{ secrets.DEV_ENV }}
 
 jobs:
-  build-and-deploy-gcr:
+  setup:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     steps:
@@ -32,9 +32,14 @@ jobs:
         run: |-
           gcloud --quiet auth configure-docker
 
+  build-and-deploy-gcr:
+    needs: [setup]
+    name: Build and Push to GCP
+    runs-on: ubuntu-latest
+    steps:
       - name: Build and tag image
         run: |-
-          echo $ENV > .env
+          echo NAME=COUCOU > .env
           docker build -t $IMAGE_NAME:latest .
 
       - name: Push Docker Image to Artifact Registry

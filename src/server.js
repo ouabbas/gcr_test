@@ -8,9 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (_, res) =>
-  res
-    .status(200)
-    .send(`${process.env.NAME ?? 'no name'}:${process.env.BIGBOSS ?? 'NADA'}`)
+  res.status(200).send(`NAME:${process.env.NAME ?? 'no name'}`)
 );
 
 app.listen(process.env.PORT || 3000, () => {
