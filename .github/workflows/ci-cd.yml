@@ -37,7 +37,7 @@ jobs:
           BIGBOSS=${{ env.BIGBOSS }}
           echo "Je vais afficher"
           echo $BIGBOSS
-          echo $BIGBOSS > .env
+          echo BIGBOSS=$BIGBOSS > .env
 
       - name: Build and tag image
         run: |-
