@@ -1,7 +1,5 @@
 name: abdc-gcloud
-on:
-  push:
-    branches: [main]
+
 env:
   CLOUD_RUN_SERVICE_ACCOUNT_EMAIL: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
   SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
@@ -12,7 +10,10 @@ env:
 
 jobs:
   build-and-deploy-dev:
-    name: Build and Push to GCP
+    on:
+      push:
+        branches: [main]
+    name: Build and Push to DEV
     environment: DEV
     runs-on: ubuntu-latest
     env:
