@@ -35,6 +35,9 @@ jobs:
       - name: Set-up env file
         run: |-
           BIGBOSS=${{ env.BIGBOSS }}
+          echo "Je vais afficher"
+          echo $BIGBOSS
+          echo $BIGBOSS > .env
 
       - name: Build and tag image
         run: |-
