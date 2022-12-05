@@ -11,9 +11,12 @@ env:
   SERVICE_NAME: gcr-test
 
 jobs:
-  setup:
-    name: SETUP
+  build-and-deploy-dev:
+    name: Build and Push to GCP
+    environment: DEV
     runs-on: ubuntu-latest
+    env:
+      NAME: ${{ secrets.NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -31,17 +34,9 @@ jobs:
         run: |-
           gcloud --quiet auth configure-docker
 
-  build-and-deploy-gcr:
-    needs: [setup]
-    name: Build and Push to GCP
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        
       - name: Build and tag image
         run: |-
-          echo NAME=COUCOU > .env
+          echo NAME=$NAME > .env
           docker build -t $IMAGE_NAME:latest .
 
       - name: Push Docker Image to Artifact Registry
