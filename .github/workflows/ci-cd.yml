@@ -1,5 +1,9 @@
 name: abdc-gcloud
 
+on:
+  push:
+    branches: [main]
+
 env:
   CLOUD_RUN_SERVICE_ACCOUNT_EMAIL: ${{ secrets.CLOUD_RUN_SERVICE_ACCOUNT_EMAIL }}
   SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
@@ -10,15 +14,12 @@ env:
 
 jobs:
   build-and-deploy-dev:
-    on:
-      push:
-        branches:
-          - main
     name: Build and Push to DEV
     environment: DEV
     runs-on: ubuntu-latest
     env:
       NAME: ${{ secrets.NAME }}
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
