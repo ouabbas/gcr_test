@@ -16,7 +16,8 @@ jobs:
   build-and-deploy-dev:
     on:
       push:
-        branches: [main]
+        branches:
+          - main
     name: Build and Push to DEV
     environment: DEV
     runs-on: ubuntu-latest
