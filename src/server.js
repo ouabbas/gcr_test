@@ -1,5 +1,5 @@
-const express = require('express');
-require('dotenv').config();
+const express = require("express");
+require("dotenv").config();
 // const isAuthenticated = require('./middlewares/auth.middleware');
 // const dtos = require('./dtos');
 // const controllers = require('./controllers');
@@ -7,10 +7,10 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-app.get('/', (_, res) =>
-  res.status(200).send(`NAME:${process.env.NAME ?? 'no name'}`)
+app.get("/", (_, res) =>
+  res.status(200).send(`ENV:${process.env.NAME ?? "no name"}`)
 );
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log('Server running on port 3000');
+  console.log("Server running on port 3000");
 });
