@@ -32,7 +32,16 @@ jobs:
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
-
+  
+      - name: 'tmp'
+        run: |-
+          echo "CLOUD_RUN_SERVICE_ACCOUNT_EMAIL = $CLOUD_RUN_SERVICE_ACCOUNT_EMAIL"
+          echo "SERVICE_ACCOUNT_KEY = $SERVICE_ACCOUNT_KEY"
+          echo "CLOUD_RUN_PROJECT_ID = $CLOUD_RUN_PROJECT_ID"
+          echo "CLOUD_RUN_REGION = $CLOUD_RUN_REGION"
+          echo "IMAGE_NAME = $IMAGE_NAME"
+          echo "SERVICE_NAME = $SERVICE_NAME"
+  
       - name: Enable the necessary APIs and enable docker auth
         run: |-
           gcloud --quiet auth configure-docker
